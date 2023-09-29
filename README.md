@@ -22,7 +22,7 @@ _**Complexity Analysis:**_ Insights into analyzing the time and space complexity
 **Textbook Reference:**
 
 
-This repository is influenced by the concepts and teachings found in the textbook "DSA" by DS Malik. While not a replacement for the textbook, our goal is to provide practical implementations and exercises that complement your learning experience from the book.
+This repository is influenced by the concepts and teachings found in the textbook "DSA" by DS Malik 2nd edition. While not a replacement for the textbook, our goal is to provide practical implementations and exercises that complement your learning experience from the book.
 
 
 **Contribution and Collaboration:**
