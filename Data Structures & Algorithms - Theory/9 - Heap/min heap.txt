@@ -1,0 +1,110 @@
+#include <iostream>
+
+class MinHeap {
+private:
+    int* heapArray;
+    int maxSize;
+    int heapSize;
+
+public:
+    MinHeap(int capacity) {
+        maxSize = capacity;
+        heapArray = new int[maxSize];
+        heapSize = 0;
+    }
+
+    ~MinHeap() {
+        delete[] heapArray;
+    }
+
+    void insert(int element) {
+        if (heapSize == maxSize) {
+            std::cout << "Heap is full. Cannot insert element.\n";
+            return;
+        }
+
+        int i = heapSize;
+        heapArray[i] = element;
+        heapSize++;
+
+        // Restore the heap property
+        while (i > 0 && heapArray[parent(i)] > heapArray[i]) {
+            swap(&heapArray[i], &heapArray[parent(i)]);
+            i = parent(i);
+        }
+    }
+
+    void removeMin() {
+        if (heapSize == 0) {
+            std::cout << "Heap is empty. Cannot remove minimum element.\n";
+            return;
+        }
+
+        heapArray[0] = heapArray[heapSize - 1];
+        heapSize--;
+
+        // Restore the heap property
+        minHeapify(0);
+    }
+
+    void printHeap() {
+        std::cout << "Heap elements: ";
+        for (int i = 0; i < heapSize; i++) {
+            std::cout << heapArray[i] << " ";
+        }
+        std::cout << "\n";
+    }
+
+private:
+    int parent(int i) {
+        return (i - 1) / 2;
+    }
+
+    int leftChild(int i) {
+        return 2 * i + 1;
+    }
+
+    int rightChild(int i) {
+        return 2 * i + 2;
+    }
+
+    void minHeapify(int i) {
+        int l = leftChild(i);
+        int r = rightChild(i);
+        int smallest = i;
+
+        if (l < heapSize && heapArray[l] < heapArray[i]) {
+            smallest = l;
+        }
+
+        if (r < heapSize && heapArray[r] < heapArray[smallest]) {
+            smallest = r;
+        }
+
+        if (smallest != i) {
+            swap(&heapArray[i], &heapArray[smallest]);
+            minHeapify(smallest);
+        }
+    }
+
+    void swap(int* a, int* b) {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+};
+
+int main() {
+    MinHeap heap(10);
+    heap.insert(8);
+    heap.insert(5);
+    heap.insert(12);
+    heap.insert(3);
+    heap.insert(10);
+    heap.printHeap();
+
+    heap.removeMin();
+    heap.printHeap();
+
+    return 0;
+}

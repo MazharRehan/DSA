@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+struct node
+{
+	int data;
+	struct node * left, * right;
+};
+
+struct node * create()
+{
+	int x;		// Line 1
+	struct node * newNode; // Line 2
+	newNode = new node;// Line 3
+	cout << " Enter value (-1 for no child): "; // Line 4
+	cin >> x; // Line 5
+	if (x == -1) // Line 6
+		return 0; // Line 7
+	newNode->data = x; // Line 8
+	cout << endl << "Left child of " << x; // Line 9
+	newNode->left = create(); // Line 10
+	cout << endl << "Right child of " << x; // Line 11
+	newNode->right = create(); // Line 12
+	return newNode; // Line 13
+}
+
+void preOrder(struct node * root)
+{
+	if (root == NULL)
+		return;
+	cout << root->data << "\t";
+	preOrder(root->left);
+	preOrder(root->right);
+}
+
+void InOrder(struct node * root)
+{
+	if (root == NULL)
+		return;
+	InOrder(root->left);
+	cout << root->data << "\t";
+	InOrder(root->right);
+}
+
+void PostOrder(struct node * root)
+{
+	if (root == NULL)
+		return;
+	PostOrder(root->left);
+	PostOrder(root->right);
+	cout << root->data << "\t";
+
+}
+
+
+void main()
+{
+	struct node * root;
+	root = 0;
+	root = create();
+
+	cout << endl << "PreOrder Traversal is: ";
+	preOrder(root);
+	cout << endl;
+
+	cout << endl << "InOrder Traversal is: ";
+	InOrder(root);
+	cout << endl;
+
+	cout << endl << "PostOrder Traversal is: ";
+	PostOrder(root);
+	cout << endl;
+
+	system("pause");
+}

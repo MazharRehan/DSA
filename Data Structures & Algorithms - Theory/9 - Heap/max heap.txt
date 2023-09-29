@@ -1,0 +1,111 @@
+// max heap
+#include <iostream>
+
+class MaxHeap {
+private:
+    int* heapArray;
+    int maxSize;
+    int heapSize;
+
+public:
+    MaxHeap(int capacity) {
+        maxSize = capacity;
+        heapArray = new int[maxSize];
+        heapSize = 0;
+    }
+
+    ~MaxHeap() {
+        delete[] heapArray;
+    }
+
+    void insert(int element) {
+        if (heapSize == maxSize) {
+            std::cout << "Heap is full. Cannot insert element.\n";
+            return;
+        }
+
+        int i = heapSize;
+        heapArray[i] = element;
+        heapSize++;
+
+        // Restore the heap property
+        while (i > 0 && heapArray[parent(i)] < heapArray[i]) {
+            swap(&heapArray[i], &heapArray[parent(i)]);
+            i = parent(i);
+        }
+    }
+
+    void removeMax() {
+        if (heapSize == 0) {
+            std::cout << "Heap is empty. Cannot remove maximum element.\n";
+            return;
+        }
+
+        heapArray[0] = heapArray[heapSize - 1];
+        heapSize--;
+
+        // Restore the heap property
+        maxHeapify(0);
+    }
+
+    void printHeap() {
+        std::cout << "Heap elements: ";
+        for (int i = 0; i < heapSize; i++) {
+            std::cout << heapArray[i] << " ";
+        }
+        std::cout << "\n";
+    }
+
+private:
+    int parent(int i) {
+        return (i - 1) / 2;
+    }
+
+    int leftChild(int i) {
+        return 2 * i + 1;
+    }
+
+    int rightChild(int i) {
+        return 2 * i + 2;
+    }
+
+    void maxHeapify(int i) {
+        int l = leftChild(i);
+        int r = rightChild(i);
+        int largest = i;
+
+        if (l < heapSize && heapArray[l] > heapArray[i]) {
+            largest = l;
+        }
+
+        if (r < heapSize && heapArray[r] > heapArray[largest]) {
+            largest = r;
+        }
+
+        if (largest != i) {
+            swap(&heapArray[i], &heapArray[largest]);
+            maxHeapify(largest);
+        }
+    }
+
+    void swap(int* a, int* b) {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+};
+
+int main() {
+    MaxHeap heap(10);
+    heap.insert(4);
+    heap.insert(9);
+    heap.insert(2);
+    heap.insert(7);
+    heap.insert(5);
+    heap.printHeap();
+
+    heap.removeMax();
+    heap.printHeap();
+
+    return 0;
+}

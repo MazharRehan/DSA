@@ -1,0 +1,5 @@
+# Example .gitattributes file
+* text=auto
+*.cpp text
+*.h text
+*.md text

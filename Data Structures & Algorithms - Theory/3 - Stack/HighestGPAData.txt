@@ -1,0 +1,7 @@
+3.5 Bill
+3.6 John
+2.7 Lisa
+3.9 Kathy
+3.4 Jason
+3.9 David
+3.4 Jack
